@@ -351,11 +351,14 @@ virDomainPCIAddressBusSetModel(virDomainPCIAddressBusPtr bus,
         bus->maxSlot = VIR_PCI_ADDRESS_SLOT_LAST;
         break;
     case VIR_DOMAIN_CONTROLLER_MODEL_PCIE_EXPANDER_BUS:
-        /* 32 slots, no hotplug, only accepts pcie-root-port or
-         * dmi-to-pci-bridge
+        /* 32 slots, no hotplug, only accepts pcie-root-port,
+         * dmi-to-pci-bridge, pcie-to-pci-bridge and
+         * pcie-switch-upstream-port
          */
         bus->flags = (VIR_PCI_CONNECT_TYPE_PCIE_ROOT_PORT |
-                      VIR_PCI_CONNECT_TYPE_DMI_TO_PCI_BRIDGE);
+                      VIR_PCI_CONNECT_TYPE_DMI_TO_PCI_BRIDGE |
+                      VIR_PCI_CONNECT_TYPE_PCIE_SWITCH_UPSTREAM_PORT |
+                      VIR_PCI_CONNECT_TYPE_PCIE_TO_PCI_BRIDGE);
         bus->minSlot = 0;
         bus->maxSlot = VIR_PCI_ADDRESS_SLOT_LAST;
         break;
