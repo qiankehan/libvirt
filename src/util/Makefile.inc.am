@@ -99,6 +99,8 @@ UTIL_SOURCES = \
 	util/viriptables.h \
 	util/viriscsi.c \
 	util/viriscsi.h \
+	util/virjemalloc.c \
+	util/virjemalloc.h \
 	util/virjson.c \
 	util/virjson.h \
 	util/virkeycode.c \
@@ -274,6 +276,7 @@ libvirt_util_la_CFLAGS = \
 	$(NUMACTL_CFLAGS) \
 	$(GNUTLS_CFLAGS) \
 	$(ACL_CFLAGS) \
+	$(JEMALLOC_CFLAGS) \
 	$(NULL)
 libvirt_util_la_LIBADD = \
 	$(CAPNG_LIBS) \
@@ -290,6 +293,7 @@ libvirt_util_la_LIBADD = \
 	$(NUMACTL_LIBS) \
 	$(ACL_LIBS) \
 	$(GNUTLS_LIBS) \
+	$(JEMALLOC_LIBS) \
 	$(NULL)
 
 
