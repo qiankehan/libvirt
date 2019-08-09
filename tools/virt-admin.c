@@ -1108,6 +1108,42 @@ cmdDaemonLogOutputs(vshControl *ctl, const vshCmd *cmd)
     return true;
 }
 
+/* --------------------------
+ * Command daemon-memory-prof-dump
+ * --------------------------
+ */
+static const vshCmdInfo info_daemon_memory_prof_dump[] = {
+    {.name = "help",
+     .data = N_("Dump the memory profile of libvirtd daemon.")
+    },
+    {.name = "desc",
+        .data = N_("Dump libvirtd daemon memory profile via 'prof.dump' of "
+                   "jemalloc mallctl. Require libvird compiled with jemalloc.")
+    },
+    {.name = NULL}
+};
+
+static const vshCmdOptDef opts_daemon_memory_prof_dump[] = {
+    {.name = "filename",
+     .type = VSH_OT_STRING,
+     .help = N_("the dump file of memory profile"),
+     .flags = VSH_OFLAG_REQ
+    },
+    {.name = NULL}
+};
+
+static bool
+cmdDaemonMemoryProfDump(vshControl *ctl, const vshCmd *cmd)
+{
+    const char *filename = NULL;
+    vshAdmControlPtr priv = ctl->privData;
+    if (vshCommandOptStringReq(ctl, cmd, "filename", &filename) < 0 ||
+        virAdmConnectMemoryProfDump(priv->conn, filename, 0) < 0)
+        return false;
+
+    return true;
+}
+
 static void *
 vshAdmConnectionHandler(vshControl *ctl)
 {
@@ -1489,6 +1525,12 @@ static const vshCmdDef managementCmds[] = {
      .handler = cmdDaemonLogOutputs,
      .opts = opts_daemon_log_outputs,
      .info = info_daemon_log_outputs,
+     .flags = 0
+    },
+    {.name = "daemon-memory-prof-dump",
+     .handler = cmdDaemonMemoryProfDump,
+     .opts = opts_daemon_memory_prof_dump,
+     .info = info_daemon_memory_prof_dump,
      .flags = 0
     },
     {.name = NULL}

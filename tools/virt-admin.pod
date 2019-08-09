@@ -213,6 +213,18 @@ B<Example>
 
         $ virt-admin daemon-log-outputs "4:stderr 2:syslog:<msg_ident>"
 
+=item B<daemon-memory-prof-dump> [I<--filename> B<string>]
+
+When libvirtd is compiled with jemalloc and memory prof of jemalloc is enabled,
+this command could dump the memory profile file. The file can be parsed by
+jeprof to analyse the heap.
+
+B<Example>
+
+    To dump the memory profile file to /tmp/libvirtd.jeprof:
+
+        $ virt-admin daemon-memory-prof-dump /tmp/libvirtd.jeprof
+
 =back
 
 =head1 SERVER COMMANDS
@@ -491,7 +503,8 @@ PURPOSE
 
 =head1 SEE ALSO
 
-L<virsh(1)>, L<virt-xml-validate(1)>, L<virt-host-validate(1)>,
+L<virsh(1)>, L<virt-xml-validate(1)>, L<virt-host-validate(1)>, L<jemalloc(3)>,
+L<jeprof(1)>
 L<https://libvirt.org/>
 
 =cut
