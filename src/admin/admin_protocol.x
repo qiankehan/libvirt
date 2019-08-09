@@ -209,6 +209,11 @@ struct admin_connect_set_logging_filters_args {
     unsigned int flags;
 };
 
+struct admin_connect_memory_prof_dump_args {
+    admin_string filename;
+    unsigned int flags;
+};
+
 /* Define the program number, protocol version and procedure numbers here. */
 const ADMIN_PROGRAM = 0x06900690;
 const ADMIN_PROTOCOL_VERSION = 1;
@@ -314,5 +319,10 @@ enum admin_procedure {
     /**
      * @generate: both
      */
-    ADMIN_PROC_CONNECT_SET_LOGGING_FILTERS = 17
+    ADMIN_PROC_CONNECT_SET_LOGGING_FILTERS = 17,
+
+    /**
+     * @generate: both
+     */
+    ADMIN_PROC_CONNECT_MEMORY_PROF_DUMP = 18
 };

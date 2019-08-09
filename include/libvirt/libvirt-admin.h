@@ -418,6 +418,10 @@ int virAdmConnectSetLoggingFilters(virAdmConnectPtr conn,
                                    const char *filters,
                                    unsigned int flags);
 
+int virAdmConnectMemoryProfDump(virAdmConnectPtr conn,
+                                const char *filename,
+                                unsigned int flags);
+
 # ifdef __cplusplus
 }
 # endif

@@ -9,8 +9,10 @@ ADMIN_PROTOCOL_GENERATED = \
 	admin/admin_server_dispatch_stubs.h \
 	$(NULL)
 
+ADMIN_PROTOCOL_JEMALLOC = util/virjemalloc.c
+
 EXTRA_DIST += $(ADMIN_PROTOCOL) $(ADMIN_PROTOCOL_GENERATED)
-BUILT_SOURCES += $(ADMIN_PROTOCOL_GENERATED)
+BUILT_SOURCES += $(ADMIN_PROTOCOL_GENERATED) $(ADMIN_PROTOCOL_JEMALLOC)
 MAINTAINERCLEANFILES += $(ADMIN_PROTOCOL_GENERATED)
 
 admin/admin_server_dispatch.c: admin/admin_server_dispatch_stubs.h
@@ -24,6 +26,8 @@ libvirt_driver_admin_la_SOURCES = \
 	admin/admin_server_dispatch.c \
 	admin/admin_server_dispatch.h \
 	admin/admin_server_dispatch_stubs.h \
+	util/virjemalloc.c \
+	util/virjemalloc.h \
 	$(NULL)
 libvirt_driver_admin_la_CFLAGS = \
 	$(AM_CFLAGS) \

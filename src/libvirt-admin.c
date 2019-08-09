@@ -1249,3 +1249,36 @@ virAdmConnectSetLoggingFilters(virAdmConnectPtr conn,
     virDispatchError(NULL);
     return -1;
 }
+
+/**
+ * virAdmConnectMemoryProfDump:
+ * @conn: pointer to an active admin connection
+ * @filename: filename of the jemalloc memory profile
+ * @flags: extra flags; not used yet, so callers should always pass 0
+ *
+ * Dump the jemalloc memory profile to a specific file. That file could be
+ * analysed by jeprof. Libvirtd daemon is required compiled with jemalloc to
+ * make this API work.
+ *
+ * Returns 0 if the new filter or the set of filters has been defined
+ * successfully, or -1 in case of an error.
+ */
+int virAdmConnectMemoryProfDump(virAdmConnectPtr conn,
+                                const char *filename,
+                                unsigned int flags)
+{
+    int ret = -1;
+
+    VIR_DEBUG("conn=%p, filename=%s, flags=0x%x", conn, filename, flags);
+
+    virResetLastError();
+    virCheckAdmConnectReturn(conn, -1);
+
+    if ((ret = remoteAdminConnectMemoryProfDump(conn, filename, flags)) < 0)
+        goto error;
+
+    return ret;
+ error:
+    virDispatchError(NULL);
+    return -1;
+}

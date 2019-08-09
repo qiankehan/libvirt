@@ -47,3 +47,8 @@ LIBVIRT_ADMIN_3.0.0 {
         virAdmConnectSetLoggingOutputs;
         virAdmConnectSetLoggingFilters;
 } LIBVIRT_ADMIN_2.0.0;
+
+LIBVIRT_ADMIN_5.7.0 {
+    global:
+        virAdmConnectMemoryProfDump;
+} LIBVIRT_ADMIN_3.0.0;

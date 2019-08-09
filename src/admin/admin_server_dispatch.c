@@ -29,6 +29,7 @@
 #include "viralloc.h"
 #include "virerror.h"
 #include "virlog.h"
+#include "virjemalloc.h"
 #include "rpc/virnetdaemon.h"
 #include "rpc/virnetserver.h"
 #include "virstring.h"
@@ -484,6 +485,42 @@ adminConnectSetLoggingFilters(virNetDaemonPtr dmn ATTRIBUTE_UNUSED,
     virCheckFlags(0, -1);
 
     return virLogSetFilters(filters);
+}
+
+static int
+adminConnectMemoryProfDump(virNetDaemonPtr dmn ATTRIBUTE_UNUSED,
+                           const char *filename,
+                           unsigned int flags)
+{
+    int ret = -1;
+    bool active = true;
+    virCheckFlags(0, -1);
+    virCheckNonEmptyStringArgGoto(filename, end);
+
+#ifdef WITH_JEMALLOC
+    if (!virJemallocProfIsEnabled()) {
+        virReportError(VIR_ERR_NO_SUPPORT, "%s",
+                       _("Jemalloc doesn't support memory profiling, "
+                         "please recompile it with --enable-prof"));
+        ret = -1;
+    }
+
+    if (virJemallocMallctlSetProfActive(active))
+        ret = -1;
+
+    if (virJemallocMallctlSetProfDump(filename))
+        ret = -1;
+
+    ret = 0;
+#else
+    virReportError(VIR_ERR_NO_SUPPORT, "%s",
+            _("Memory profiling is not support since libvirtd is not "
+              "compiled with jemalloc"));
+    ret = -1;
+#endif
+
+ end:
+    return ret;
 }
 
 static int
