@@ -7164,11 +7164,12 @@ qemuDomainDeviceDefValidateDisk(const virDomainDiskDef *disk,
         return -1;
     }
 
-    if (disk->device == VIR_DOMAIN_DISK_DEVICE_CDROM &&
-        disk->bus == VIR_DOMAIN_DISK_BUS_VIRTIO) {
+    if (disk->device == VIR_DOMAIN_DISK_DEVICE_CDROM) {
+        if (disk->bus == VIR_DOMAIN_DISK_BUS_VIRTIO ||
+            disk->bus == VIR_DOMAIN_DISK_BUS_USB)
         virReportError(VIR_ERR_CONFIG_UNSUPPORTED,
-                       _("disk type 'virtio' of '%s' does not support ejectable media"),
-                       disk->dst);
+                       _("disk type '%s' of '%s' does not support ejectable media"),
+                       virDomainDiskBusTypeToString(disk->bus), disk->dst);
         return -1;
     }
 
