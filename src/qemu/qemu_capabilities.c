@@ -568,6 +568,9 @@ VIR_ENUM_IMPL(virQEMUCaps,
               "blockdev-snapshot.allow-write-only-overlay",
               "blockdev-reopen",
               "storage.werror",
+
+              /* 360 */
+              "rbd.namespace",
     );
 
 
@@ -1447,6 +1450,7 @@ static struct virQEMUCapsStringFlags virQEMUCapsQMPSchemaQueries[] = {
     { "blockdev-add/arg-type/+nvme", QEMU_CAPS_DRIVE_NVME },
     { "query-named-block-nodes/arg-type/flat", QEMU_CAPS_QMP_QUERY_NAMED_BLOCK_NODES_FLAT },
     { "blockdev-snapshot/$allow-write-only-overlay", QEMU_CAPS_BLOCKDEV_SNAPSHOT_ALLOW_WRITE_ONLY },
+    { "blockdev-add/arg-type/+rbd/namespace", QEMU_CAPS_RBD_NAMESPACE },
 };
 
 typedef struct _virQEMUCapsObjectTypeProps virQEMUCapsObjectTypeProps;
