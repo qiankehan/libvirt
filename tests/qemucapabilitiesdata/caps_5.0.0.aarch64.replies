@@ -16941,6 +16941,11 @@
           "type": "str"
         },
         {
+          "name": "namespace",
+          "default": null,
+          "type": "str"
+        },
+        {
           "name": "image",
           "type": "str"
         },
