@@ -1,0 +1,21 @@
+{
+  "node-name": "node-b-f",
+  "read-only": false,
+  "driver": "raw",
+  "file": "node-a-s",
+  "backing": null
+}
+{
+  "driver": "rbd",
+  "server": [{
+    "type": "inet",
+    "host": "host1.example.com",
+    "port": "6789"
+  }],
+  "pool": "foo",
+  "image": "bar",
+  "namespace": "ns",
+  "node-name": "node-a-s",
+  "auto-read-only": true,
+  "discard": "unmap"
+}
